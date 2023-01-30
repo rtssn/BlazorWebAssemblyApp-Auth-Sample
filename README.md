@@ -18,7 +18,7 @@ Firebase の API キーとドメインの設定を記述します。
 }
 ```
 
-※開発環境で分けたい場合は appsettings.Development.json に記述します。
+※開発環境で分けたい場合は appsettings.Development.json に記述します。  
 ※本番環境用には appsettings.Production.json を作成します。
 
 ## 使用ライブラリ
