@@ -3,6 +3,7 @@
 @using BlazorWebAssemblyApp.Services;
 @using Firebase.Auth;
 @inject CustomAuthStateProvider _authProvider
+@inject FirebaseSettings _firebaseSettings
 
 <PageTitle>Index</PageTitle>
 
@@ -29,7 +30,7 @@
     {
         if (string.IsNullOrWhiteSpace(_email)) return;
 
-        FirebaseAuthService firebaseAuthService = new FirebaseAuthService();
+        FirebaseAuthService firebaseAuthService = new FirebaseAuthService(_firebaseSettings);
         UserCredential? userCredential = await firebaseAuthService.SignInWithEmail(_email, _password);
 
         if (userCredential != null)

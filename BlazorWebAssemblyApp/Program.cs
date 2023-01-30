@@ -8,8 +8,18 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped<CustomAuthStateProvider>();
-builder.Services.AddScoped<AuthenticationStateProvider>(p => p.GetRequiredService<CustomAuthStateProvider>());
+builder.Services.AddSingleton<CustomAuthStateProvider>();
+builder.Services.AddSingleton<AuthenticationStateProvider>(p => p.GetRequiredService<CustomAuthStateProvider>());
+builder.Services.AddSingleton(p => {
+    FirebaseSettings? firebaseSettings = p.GetRequiredService<IConfiguration>().Get<FirebaseSettings>();
+
+    if(firebaseSettings == null)
+    {
+        firebaseSettings = new FirebaseSettings();
+    }
+
+    return firebaseSettings;
+});
 
 builder.Services.AddOidcAuthentication(options =>
 {

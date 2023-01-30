@@ -1,20 +1,26 @@
 ﻿using Firebase.Auth.Providers;
 using Firebase.Auth;
 using System.Net;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorWebAssemblyApp.Services
 {
     public class FirebaseAuthService
     {
-        private readonly FirebaseAuthConfig config = new FirebaseAuthConfig
+        private readonly FirebaseAuthConfig config;
+
+        public FirebaseAuthService(FirebaseSettings firebaseSettings)
         {
-            ApiKey = "<YOUR API KEY>",
-            AuthDomain = "<YOUR AUTH DOMAIN>.firebaseapp.com",
-            Providers = new FirebaseAuthProvider[]
-        {
-                    new EmailProvider()
+            config = new FirebaseAuthConfig
+            {
+                ApiKey = firebaseSettings.FirebaseApiKey,
+                AuthDomain = firebaseSettings.FirebaseAuthDomain,
+                Providers = new FirebaseAuthProvider[]
+                {
+                            new EmailProvider()
+                }
+            };
         }
-        };
 
         /// <summary>
         /// メールアドレスを使ってサインインします。
