@@ -4,7 +4,7 @@ Blazor WebAsembly App with Firebase authorization
 
 ## 参考にした記事
 
-[ASP.NET Core Blazor Server でオレオレ認証を追加したい without Cookie](https://zenn.dev/okazuki/articles/blazor-oreore-auth-part3)
+[ASP.NET Core Blazor Server でオレオレ認証を追加したい without Cookie](https://zenn.dev/okazuki/articles/blazor-oreore-auth-part3)  
 [その github](https://github.com/runceel/BlazorOreoreAuth)
 
 ## wwwroot/appsettings.json
