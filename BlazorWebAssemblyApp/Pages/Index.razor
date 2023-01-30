@@ -1,5 +1,7 @@
 ﻿@page "/"
 @using System.Security.Claims
+@using BlazorWebAssemblyApp.Services;
+@using Firebase.Auth;
 @inject CustomAuthStateProvider _authProvider
 
 <PageTitle>Index</PageTitle>
@@ -12,27 +14,37 @@
     <NotAuthorized>
         <h1>ログイン画面</h1>
 
-        <input @bind="_userName" />
+        <label>email</label>
+        <input @bind="_email" />
+        <label>password</label>
+        <input @bind="_password" />
         <button @onclick="SignIn">ログイン</button>
     </NotAuthorized>
 </AuthorizeView>
 
 @code {
-    private string? _userName;
+    private string? _email;
+    private string? _password;
     private async Task SignIn()
     {
-        if (string.IsNullOrWhiteSpace(_userName)) return;
+        if (string.IsNullOrWhiteSpace(_email)) return;
 
-        // とりあえず素直に入力された名前でログインする
-        await _authProvider.UpdateSignInStatusAsync(new ClaimsPrincipal(
-            new ClaimsIdentity(
-                new Claim[]
-                {
-                    new (ClaimTypes.Name, _userName),
-                },
-                "Custom"
-            )
-        ));
+        FirebaseAuthService firebaseAuthService = new FirebaseAuthService();
+        UserCredential? userCredential = await firebaseAuthService.SignInWithEmail(_email, _password);
+
+        if (userCredential != null)
+        {
+            // とりあえず素直に入力された名前でログインする
+            await _authProvider.UpdateSignInStatusAsync(new ClaimsPrincipal(
+                new ClaimsIdentity(
+                    new Claim[]
+                    {
+                    new (ClaimTypes.Name, _email),
+                    },
+                    "Custom"
+                )
+            ));
+        }
     }
 
     private async Task SignOut()
