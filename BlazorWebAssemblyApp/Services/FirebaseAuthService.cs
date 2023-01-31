@@ -35,7 +35,7 @@ namespace BlazorWebAssemblyApp.Services
             {
                 FirebaseAuthClient client = new FirebaseAuthClient(config);
 
-                var result = await client.FetchSignInMethodsForEmailAsync(email);
+                FetchUserProvidersResult result = await client.FetchSignInMethodsForEmailAsync(email);
 
                 if (result.UserExists && result.AllProviders.Contains(FirebaseProviderType.EmailAndPassword))
                 {
@@ -51,6 +51,9 @@ namespace BlazorWebAssemblyApp.Services
             return userCredential;
         }
 
+        /// <summary>
+        /// サインアウトします。
+        /// </summary>
         public void Signout()
         {
             FirebaseAuthClient firebaseAuthClient = new FirebaseAuthClient(config);
