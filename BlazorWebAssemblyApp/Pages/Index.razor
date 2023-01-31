@@ -14,19 +14,17 @@
     </Authorized>
     <NotAuthorized>
         <h1>ログイン画面</h1>
-        <form>
-            <div>
-                <label>email</label>
-                <input @bind="_email" />
-            </div>
-            <div>
-                <label>password</label>
-                <input type="password" @bind="_password" />
-            </div>
-            <div>
-                <button type="submit" @onclick="SignIn">ログイン</button>
-            </div>
-        </form>
+        <div>
+            <label>email</label>
+            <input @bind="_email" />
+        </div>
+        <div>
+            <label>password</label>
+            <input type="password" @bind="_password" />
+        </div>
+        <div>
+            <button type="submit" @onclick="SignIn">ログイン</button>
+        </div>
 
     </NotAuthorized>
 </AuthorizeView>
@@ -43,7 +41,7 @@
 
         if (userCredential != null)
         {
-            // とりあえず素直に入力された名前でログインする
+            // ログインができたらプロバイダでステータスを更新する
             await _authProvider.UpdateSignInStatusAsync(new ClaimsPrincipal(
                 new ClaimsIdentity(
                     new Claim[]
