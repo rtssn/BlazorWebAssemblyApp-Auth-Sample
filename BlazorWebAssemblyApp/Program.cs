@@ -8,9 +8,9 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddSingleton<CustomAuthStateProvider>();
-builder.Services.AddSingleton<AuthenticationStateProvider>(p => p.GetRequiredService<CustomAuthStateProvider>());
-builder.Services.AddSingleton(p => {
+
+// Firebase settings
+builder.Services.AddScoped(p => {
     FirebaseSettings? firebaseSettings = p.GetRequiredService<IConfiguration>().Get<FirebaseSettings>();
 
     if(firebaseSettings == null)
@@ -20,6 +20,10 @@ builder.Services.AddSingleton(p => {
 
     return firebaseSettings;
 });
+
+// Firebase Auth
+builder.Services.AddScoped<CustomAuthStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(p => p.GetRequiredService<CustomAuthStateProvider>());
 
 builder.Services.AddOidcAuthentication(options =>
 {
